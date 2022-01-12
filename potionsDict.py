@@ -3,7 +3,7 @@ from random import randint
 potions = {
     0:{'PotionName': 'Potion of Poison', 'PotionDescription': "If you drink it, you take 3d6 poison damage, and you must succeed on a DC 13 Constitution saving throw or be poisoned.\n\nAt the start of each of your turns while you are poisoned in this way, you take 3d6 poison damage. At the end of each of your turns, you can repeat the saving throw. On a successful save, the poison damage you take on your subsequent turns decreases by 1d6.\n\nThe poison ends when the damage decreases to 0." },
     
-    1:{'PotionName': 'Potion of Resistance', 'Potion of Resistance': "When you drink this potion, you gain resistance to one type of damage for 1 hour.", 'Options': {1:'Potion of Acid Resistance', 2:'Potion of Cold Resistance', 3:'Potion of Fire Resistance', 4:'Potion of Force Resistance', 5: 'Potion of Lightning Resistance', 6: 'Potion of Necrotic Resistance', 7: 'Potion of Poison Resistance', 8: 'Potion of Psychic Resistance', 9: 'Potion of Radiant Resistance', 10: 'Potion of Thunder Resistance'}},
+    1:{'PotionName': 'Potion of Resistance', 'PotionDescription': "When you drink this potion, you gain resistance to one type of damage for 1 hour.", 'Options': {1:'Potion of Acid Resistance', 2:'Potion of Cold Resistance', 3:'Potion of Fire Resistance', 4:'Potion of Force Resistance', 5: 'Potion of Lightning Resistance', 6: 'Potion of Necrotic Resistance', 7: 'Potion of Poison Resistance', 8: 'Potion of Psychic Resistance', 9: 'Potion of Radiant Resistance', 10: 'Potion of Thunder Resistance'}},
     
     2: {'PotionName': 'Potion of Speed', 'PotionDescription': "When you drink this potion, you gain the effect of the haste spell for 1 minute (no concentration required).\n\nThe potion's yellow fluid is streaked with black and swirls on its own."},
     
@@ -24,41 +24,41 @@ potions = {
     10: {'PotionName': 'Potion of Giant Strength', 'PotionDescription':"When you drink this potion, your Strength score changes for 1 hour.\n\nThe potion has no effect on you if your Strength is equal to or greater than that score.\n\nThis potion's transparent liquid has floating in it a sliver of fingernail from a giant of the appropriate type.", 'Options':{1:"Potion of Hill Giant Strength (Str: 21)", 2:"Potion of Frost Giant Strength (Str: 23)", 3: "Potion of Stone Giant Strength (Str: 23)", 4:"Potion of Fire Giant Strength (Str: 25)", 5:"Potion of Cloud Giant Strength (Str: 27)", 6: "Potion of Storm Giant Strength (Str: 29)"}},
 }
 
+def getpotion():
+    roll = randint(1,100)
 
-roll = randint(1,100)
+    if roll > 1 and roll <= 50:
+        num = 0
+    elif roll > 50 and roll <= 55:
+        num = 1
+    elif roll > 55 and roll <= 60:
+        num = 2
+    elif roll > 60 and roll <= 65:
+        num = 3
+    elif roll > 65 and roll <=70:
+        num = 4
+    elif roll > 70 and roll <= 75:
+        num = 5
+    elif roll > 75 and roll <= 80:
+        num = 6
+    elif roll > 80 and roll <= 85:
+        num = 7
+    elif roll > 85 and roll <= 90:
+        num = 8
+    elif roll > 90 and roll <= 95:
+        num = 9
+    elif roll > 95 and roll <= 100:
+        num = 10
 
-if roll > 1 and roll <= 50:
-    num = 0
-elif roll > 50 and roll <= 55:
-    num = 1
-elif roll > 55 and roll <= 60:
-    num = 2
-elif roll > 60 and roll <= 65:
-    num = 3
-elif roll > 65 and roll <=70:
-    num = 4
-elif roll > 70 and roll <= 75:
-    num = 5
-elif roll > 75 and roll <= 80:
-    num = 6
-elif roll > 80 and roll <= 85:
-    num = 7
-elif roll > 85 and roll <= 90:
-    num = 8
-elif roll > 90 and roll <= 95:
-    num = 9
-elif roll > 95 and roll <= 100:
-    num = 10
-
-rolledPotionName = potions[num]['PotionName']
-rolledPotionDescription = potions[num]['PotionDescription'] 
-try:
-    potionOptions = len(potions[num]['Options'])
-    if potionOptions > 0:
-        rolledPotionOptions = potions[num]['Options']
-        optionsRoll = randint(1,len(rolledPotionOptions))
-        rolledPotionName = f"{rolledPotionOptions[optionsRoll]}"
-    else:
+    rolledPotionName = potions[num]['PotionName']
+    rolledPotionDescription = potions[num]['PotionDescription'] 
+    try:
+        potionOptions = len(potions[num]['Options'])
+        if potionOptions > 0:
+            rolledPotionOptions = potions[num]['Options']
+            optionsRoll = randint(1,len(rolledPotionOptions))
+            rolledPotionName = f"{rolledPotionOptions[optionsRoll]}"
+        else:
+            pass
+    except:
         pass
-except:
-    pass
