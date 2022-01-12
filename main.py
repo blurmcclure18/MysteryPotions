@@ -4,6 +4,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from potionsDict import potions
 from random import randint
 
+__version__ = 1.0
+
 screen_helper = """
 ScreenManager:
     HomeScreen:
@@ -263,7 +265,7 @@ sm = ScreenManager()
 sm.add_widget(HomeScreen(name='home'))
 sm.add_widget(PotionScreen(name='potion'))
 sm.add_widget(OptionScreen(name='option'))
-class DemoApp(MDApp):
+class MysteryPotionApp(MDApp):
 
     def build(self):
         screen = Builder.load_string(screen_helper)
@@ -274,4 +276,4 @@ class DemoApp(MDApp):
         MDApp.get_running_app().root.current = screen
 
 if __name__ == '__main__':
-    DemoApp().run()
+    MysteryPotionApp().run()
