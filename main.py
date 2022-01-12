@@ -107,8 +107,6 @@ ScreenManager:
         pos_hint: {'center_x':0.5, 'center_y':0.4}
         on_press:
             root.rollOption()
-        on_release:
-            root.manager.current = 'potion'
     
     MDFillRoundFlatButton:
         text: 'Back'
@@ -188,6 +186,7 @@ class HomeScreen(Screen):
         potionScreen = self.manager.get_screen('potion')
         
         global rollNum
+        global potionrolled
 
         try:
             roll = randint(1,100)
@@ -218,26 +217,23 @@ class HomeScreen(Screen):
             try:
                 global rolledPotionOptions
                 
-                rolledPotionOptions = len(potions[searchNum]['Options'])
+                rolledPotionOptions = len(potions[rollNum]['Options'])
                 self.manager.get_screen('option').ids.optionName.text = f"Roll A d{rolledPotionOptions}"
 
                 rolledPotionDescription = potions[rollNum]['PotionDescription']
                 potionScreen.ids.potionDescription.text = rolledPotionDescription
-
-                global potionrolled
                 
                 potionrolled = True
 
                 MDApp.get_running_app().root.current = "option"
 
             except:
-
-                searchedPotionName = potions[searchNum]['PotionName']
+                searchedPotionName = potions[rollNum]['PotionName']
                 potionScreen.ids.potionName.text = searchedPotionName
 
-                searchedPotionDescription = potions[searchNum]['PotionDescription']
+                searchedPotionDescription = potions[rollNum]['PotionDescription']
                 potionScreen.ids.potionDescription.text = searchedPotionDescription
-                
+
                 potionrolled = True
 
                 MDApp.get_running_app().root.current = "potion"
@@ -252,19 +248,50 @@ class PotionScreen(Screen):
         homeScreen.ids.rollInput.text = ''
         optionScreen.ids.optionInput.text = ''
 
+        global potionsearched
+        potionsearched = False
+
+        global potionrolled
+        potionrolled = False
+
         MDApp.get_running_app().root.current = 'home'
 
 class OptionScreen(Screen):
     def searchOption(self):
-        potionScreen = self.manager.get_screen('potion')
-        
-        searchedPotionOptions = potions[searchNum]['Options']
-        optionsRoll = int(self.manager.get_screen('option').ids.optionInput.text)
-        
-        searchedPotionName = f"{searchedPotionOptions[optionsRoll]}"
-        potionScreen.ids.potionName.text = searchedPotionName
+        global potionrolled
+        global potionsearched
+        try:
+            if potionsearched == True:
+                print(potionsearched)
+                global searchPotionOptions
+                global searchNum
+                
+                roll = int(self.manager.get_screen('option').ids.optionInput.text)
 
-        MDApp.get_running_app().root.current = "potion"
+                print(roll)
+                
+                searchOptions = potions[searchNum]['Options']
+                searchedName = f"{searchOptions[roll]}"
+                
+                potionScreen = self.manager.get_screen('potion')
+                potionScreen.ids.potionName.text = searchedName
+
+                MDApp.get_running_app().root.current = 'potion'
+            elif potionrolled == True:
+                global rolledPotionOptions
+                global rollNum
+
+                roll = int(self.manager.get_screen('option').ids.optionInput.text)
+
+                rollOptions = potions[rollNum]['Options']
+                rolledName = f"{rollOptions[roll]}"
+
+                potionScreen = self.manager.get_screen('potion')
+                potionScreen.ids.potionName.text = rolledName
+
+                MDApp.get_running_app().root.current = 'potion'
+        except:
+            pass
     
     def rollOption(self):
         global potionsearched
@@ -282,6 +309,8 @@ class OptionScreen(Screen):
                 potionScreen = self.manager.get_screen('potion')
                 potionScreen.ids.potionName.text = searchedName
 
+                MDApp.get_running_app().root.current = 'potion'
+
             elif potionrolled == True:
                 global rolledPotionOptions
                 global rollNum
@@ -293,6 +322,8 @@ class OptionScreen(Screen):
 
                 potionScreen = self.manager.get_screen('potion')
                 potionScreen.ids.potionName.text = rolledName
+
+                MDApp.get_running_app().root.current = 'potion'
         except:
             pass
     
