@@ -1,0 +1,23 @@
+potions = {
+    0:{'PotionName': 'Potion of\nPoison', 'PotionDescription': "If you drink it, you take 3d6 poison damage, and you must succeed on a DC 13 Constitution saving throw or be poisoned.\n\nAt the start of each of your turns while you are poisoned in this way, you take 3d6 poison damage. At the end of each of your turns, you can repeat the saving throw. On a successful save, the poison damage you take on your subsequent turns decreases by 1d6.\n\nThe poison ends when the damage decreases to 0." },
+    
+    1:{'PotionName': 'Potion of\nResistance', 'PotionDescription': "When you drink this potion, you gain resistance to one type of damage for 1 hour.", 'Options': {1:'Potion of\nAcid Resistance', 2:'Potion of\nCold Resistance', 3:'Potion of\nFire Resistance', 4:'Potion of\nForce Resistance', 5: 'Potion of\nLightning Resistance', 6: 'Potion of\nNecrotic Resistance', 7: 'Potion of\nPoison Resistance', 8: 'Potion of\nPsychic Resistance', 9: 'Potion of\nRadiant Resistance', 10: 'Potion of\nThunder Resistance'}},
+    
+    2: {'PotionName': 'Potion of\nSpeed', 'PotionDescription': "When you drink this potion, you gain the effect of the haste spell for 1 minute (no concentration required).\n\nThe potion's yellow fluid is streaked with black and swirls on its own."},
+    
+    3: {'PotionName': 'Potion of\nGaseous Form', 'PotionDescription': "When you drink this potion, you gain the effect of the gaseous form spell for 1 hour (no concentration required) or until you end the effect as a bonus action.\n\nThis potion's container seems to hold fog that moves and pours like water."},
+    
+    4: {'PotionName': 'Potion of Growth', 'PotionDescription': "When you drink this potion, you gain the 'enlarge' effect of the enlarge/reduce spell for 1d4 hours (no concentration required). The red in the potion's liquid continuously expands from a tiny bead to color the clear liquid around it and then contracts. Shaking the bottle fails to interrupt this process."},
+    
+    5: {'PotionName': 'Potion of Healing', 'PotionDescription':"You regain hit points when you drink this potion.\nWhatever its potency, the potion’s red liquid glimmers when agitated.", 'Options': {1: "Potion of\nHealing\n(2d4 + 2)", 2: "Potion of\nGreater Healing\n(4d4 + 4)", 3: "Potion of\nSuperior Healing\n(8d4 + 8)", 4: "Potion of\nSupreme Healing\n(10d4 + 20)"}},
+    
+    6: {'PotionName': 'Potion of\nInvisibility', 'PotionDescription': "This potion's container looks empty but feels as though it holds liquid. When you drink it, you become invisible for 1 hour. Anything you wear or carry is invisible with you. The effect ends early if you attack or cast a spell."},
+    
+    7: {'PotionName': 'Potion of\nClimbing ', 'PotionDescription': "When you drink this potion, you gain a climbing speed equal to your walking speed for 1 hour.\n\nDuring this time, you have advantage on Strength (Athletics) checks you make to climb.\n\nThe potion is separated into brown, silver, and gray layers resembling bands of stone. Shaking the bottle fails to mix the colors."},
+    
+    8: {'PotionName': 'Potion of\nDiminution', 'PotionDescription': "When you drink this potion, you gain the 'reduce' effect of the enlarge/reduce spell for 1d4 hours (no concentration required).\n\nThe red in the potion's liquid continuously contracts to a tiny bead and then expands to color the clear liquid around it. Shaking the bottle fails to interrupt this process."},
+    
+    9: {'PotionName': 'Potion of\nFire Breath', 'PotionDescription': "After drinking this potion, you can use a bonus action to exhale fire at a target within 30 feet of you. The target must make a DC 13 Dexterity saving throw, taking 4d6 fire damage on a failed save, or half as much damage on a successful one. The effect ends after you exhale the fire three times or when 1 hour has passed. \nThis potion's orange liquid flickers, and smoke fills the top of the container and wafts out whenever it is opened."},
+    
+    10: {'PotionName': 'Potion of\nGiant Strength', 'PotionDescription':"When you drink this potion, your Strength score changes for 1 hour.\n\nThe potion has no effect on you if your Strength is equal to or greater than that score.\n\nThis potion's transparent liquid has floating in it a sliver of fingernail from a giant of the appropriate type.", 'Options':{1:"Potion of\nHill Giant Strength\n(Str: 21)", 2:"Potion of\nFrost Giant Strength\n(Str: 23)", 3: "Potion of\nStone Giant Strength\n(Str: 23)", 4:"Potion of\nFire Giant Strength\n(Str: 25)", 5:"Potion of\nCloud Giant Strength\n(Str: 27)", 6: "Potion of\nStorm Giant Strength\n(Str: 29)"}},
+}

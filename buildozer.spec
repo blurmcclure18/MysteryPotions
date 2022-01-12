@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Mystery Potions
+title = Mystery Potion 
 
 # (str) Package name
-package.name = mysteryPotions
+package.name = mysterypotion
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = mysteryPotions.release
+package.domain = org.test
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -28,7 +28,7 @@ source.include_exts = py,png,jpg,kv,atlas
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.1
+version = 0.5
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,kivyMD
+requirements = python3,kivy,kivyMD,pillow
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -88,7 +88,7 @@ fullscreen = 1
 #android.permissions = INTERNET
 
 # (int) Target Android API, should be as high as possible.
-#android.api = 32
+#android.api = 30
 
 # (int) Minimum API your APK will support.
 #android.minapi = 21
@@ -109,7 +109,7 @@ fullscreen = 1
 #android.ndk_path =
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
-#android.sdk_path =
+#android.sdk_path =/home/alec/Android/Sdk/
 
 # (str) ANT directory (if empty, it will be automatically downloaded.)
 #android.ant_path =
@@ -123,7 +123,7 @@ fullscreen = 1
 # agreements. This is intended for automation only. If set to False,
 # the default, you will be shown the license when first running
 # buildozer.
-# android.accept_sdk_license = False
+# android.accept_sdk_license = True
 
 # (str) Android entry point, default is ok for Kivy-based app
 #android.entrypoint = org.renpy.android.PythonActivity

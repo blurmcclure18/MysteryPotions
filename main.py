@@ -1,7 +1,7 @@
 from kivymd.app import MDApp
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from potionsDict import potions
+from potionsdict import potions
 from random import randint
 
 __version__ = 1.0
@@ -20,31 +20,29 @@ ScreenManager:
         hint_text: "Enter Roll"
         helper_text: "Enter the d100 roll of your player"
         helper_text_mode:"on_focus"
-        required: True
-        max_text_length: 3
         icon_right: "dice-d20"
         icon_right_color: app.theme_cls.primary_color
-        pos_hint:{'center_x':0.5, 'center_y':0.7}
+        pos_hint:{'center_x':0.5, 'center_y':0.6}
         size_hint_x:None
         width:300
     
     MDLabel:
         text: "Mystery Potion Finder"
         halign: 'center'
-        pos_hint: {'center_y':0.9}
-        font_style: 'H1'
+        pos_hint: {'center_y':0.8}
+        font_style: 'H2'
         theme_text_color: "Custom"
         text_color: 243, 160, 81, 1
     
     MDFillRoundFlatButton:
         text:'Search'
-        pos_hint: {'center_x':0.5, 'center_y':0.6}
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
         on_press:
             root.searchPotion()
     
     MDFillRoundFlatButton:
         text: 'Roll'
-        pos_hint: {'center_x':0.5, 'center_y':0.5}
+        pos_hint: {'center_x':0.5, 'center_y':0.4}
         on_press:
             root.rollPotion()
     
@@ -54,9 +52,10 @@ ScreenManager:
     MDLabel:
         id: potionName
         text: "Potion"
+        multiline: True
         halign: 'center'
-        pos_hint: {'center_y':0.9}
-        font_style: 'H1'
+        pos_hint: {'center_y':0.8}
+        font_style: 'H2'
         theme_text_color: "Custom"
         text_color: 243, 160, 81, 1
     
@@ -64,7 +63,7 @@ ScreenManager:
         id: potionDescription
         text: "Description"
         halign: 'center'
-        pos_hint: {'center_y':0.7}
+        pos_hint: {'center_y':0.5}
         font_style: 'Body1'
         theme_text_color: "Secondary"
 
@@ -72,8 +71,7 @@ ScreenManager:
         text: 'Back'
         pos_hint: {'center_x':0.5,'center_y':0.1}
         on_press:
-            root.manager.transition.direction = 'right'
-            root.manager.current = 'home'
+            root.clearText()
 
 <OptionScreen>:
     name: 'option'
@@ -82,50 +80,46 @@ ScreenManager:
         id: optionName
         text: "Roll a dNum"
         halign: 'center'
-        pos_hint: {'center_y':0.9}
-        font_style: 'H1'
+        pos_hint: {'center_y':0.8}
+        font_style: 'H2'
         theme_text_color: "Custom"
         text_color: 243, 160, 81, 1
     
     MDTextField:
         id: optionInput
         hint_text: "Enter Roll"
-        required: True
-        max_text_length: 2
         icon_right: "dice-d20"
         icon_right_color: app.theme_cls.primary_color
-        pos_hint:{'center_x':0.5, 'center_y':0.7}
+        pos_hint:{'center_x':0.5, 'center_y':0.6}
         size_hint_x:None
         width:300
 
     MDFillRoundFlatButton:
         id: searchBtn
         text:'Search'
-        pos_hint: {'center_x':0.5, 'center_y':0.6}
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
         on_press:
             root.getOption()
         on_release:
-            root.manager.transition.direction = 'left'
             root.manager.current = 'potion'
     
     MDFillRoundFlatButton:
         id: rollBtn
         text: 'Roll'
-        pos_hint: {'center_x':0.5, 'center_y':0.5}
+        pos_hint: {'center_x':0.5, 'center_y':0.4}
         on_press:
             root.optionRoll()
         on_release:
-            root.manager.transition.direction = 'left'
             root.manager.current = 'potion'
     
     MDFillRoundFlatButton:
         text: 'Back'
         pos_hint: {'center_x':0.5,'center_y':0.1}
         on_press:
-            root.manager.transition.direction = 'right'
-            root.manager.current = 'home'
+            root.clearText()
 """
 class HomeScreen(Screen):
+
     def searchPotion(self):
         try:
             potionScreen = self.manager.get_screen('potion')
@@ -215,6 +209,7 @@ class HomeScreen(Screen):
                 potionOptions = len(potions[num]['Options'])
                 
                 if potionOptions > 0:
+                    self.manager.get_screen('option').ids.optionName.text = f"Roll A d{potionOptions}"
                     MDApp.get_running_app().root.current = "option"
                 else:
                     pass
@@ -224,7 +219,14 @@ class HomeScreen(Screen):
             pass
 
 class PotionScreen(Screen):
-    pass
+    def clearText(self):
+        homeScreen = self.manager.get_screen('home')
+        optionScreen = self.manager.get_screen('option')
+
+        homeScreen.ids.rollInput.text = ''
+        optionScreen.ids.optionInput.text = ''
+
+        MDApp.get_running_app().root.current = 'home'
 
 class OptionScreen(Screen):
     def getOption(self):
@@ -245,20 +247,16 @@ class OptionScreen(Screen):
             optionsRoll = roll
             rolledPotionName = f"{rolledPotionOptions[optionsRoll]}"
             potionScreen.ids.potionName.text = rolledPotionName
-
-            rolledPotionName = potions[num]['PotionName']
-            try:
-                potionOptions = len(potions[num]['Options'])
-                if potionOptions > 0:
-                    rolledPotionOptions = potions[num]['Options']
-                    optionsRoll = randint(1,len(rolledPotionOptions))
-                    rolledPotionName = f"{rolledPotionOptions[optionsRoll]}"
-                else:
-                    pass
-            except:
-                pass
         except:
             pass
+    def clearText(self):
+        homeScreen = self.manager.get_screen('home')
+        optionScreen = self.manager.get_screen('option')
+
+        homeScreen.ids.rollInput.text = ''
+        optionScreen.ids.optionInput.text = ''
+
+        MDApp.get_running_app().root.current = 'home'
 
 # Create the screen manager
 sm = ScreenManager()
@@ -271,9 +269,6 @@ class MysteryPotionApp(MDApp):
         screen = Builder.load_string(screen_helper)
         self.theme_cls.theme_style = 'Dark'
         return screen
-
-    def set_screen(self, screen):
-        MDApp.get_running_app().root.current = screen
 
 if __name__ == '__main__':
     MysteryPotionApp().run()
