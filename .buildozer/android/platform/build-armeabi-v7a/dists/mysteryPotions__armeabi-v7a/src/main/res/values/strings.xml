@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Mystery Potions</string>
-    <string name="private_version">0de6b28acaa2b7cb344f21cc3fc3133dcd8be961</string>
+    <string name="private_version">09447c91d4eb94f5c8cd82764eb0ea3b204ca0fd</string>
     <string name="presplash_color">#000000</string>
     <string name="urlScheme">kivy</string>
 </resources>

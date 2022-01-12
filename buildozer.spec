@@ -7,7 +7,7 @@ title = Mystery Potions
 package.name = mysteryPotions
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = mysteryPotions.release
 
 # (str) Source code where the main.py live
 source.dir = .
