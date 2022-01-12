@@ -99,16 +99,14 @@ ScreenManager:
         text:'Search'
         pos_hint: {'center_x':0.5, 'center_y':0.5}
         on_press:
-            root.getOption()
-        on_release:
-            root.manager.current = 'potion'
+            root.searchOption()
     
     MDFillRoundFlatButton:
         id: rollBtn
         text: 'Roll'
         pos_hint: {'center_x':0.5, 'center_y':0.4}
         on_press:
-            root.optionRoll()
+            root.rollOption()
         on_release:
             root.manager.current = 'potion'
     
@@ -120,6 +118,12 @@ ScreenManager:
 """
 class HomeScreen(Screen):
 
+    global potionsearched
+    potionsearched = False
+
+    global potionrolled
+    potionrolled = False
+
     def searchPotion(self):
         try:
             potionScreen = self.manager.get_screen('potion')
@@ -127,93 +131,115 @@ class HomeScreen(Screen):
 
             roll = int(homeScreen.ids.rollInput.text)
 
-            global num
+            global searchNum
 
             if roll > 1 and roll <= 50:
-                num = 0
+                searchNum = 0
             elif roll > 50 and roll <= 55:
-                num = 1
+                searchNum = 1
             elif roll > 55 and roll <= 60:
-                num = 2
+                searchNum = 2
             elif roll > 60 and roll <= 65:
-                num = 3
+                searchNum = 3
             elif roll > 65 and roll <=70:
-                num = 4
+                searchNum = 4
             elif roll > 70 and roll <= 75:
-                num = 5
+                searchNum = 5
             elif roll > 75 and roll <= 80:
-                num = 6
+                searchNum = 6
             elif roll > 80 and roll <= 85:
-                num = 7
+                searchNum = 7
             elif roll > 85 and roll <= 90:
-                num = 8
+                searchNum = 8
             elif roll > 90 and roll <= 95:
-                num = 9
+                searchNum = 9
             elif roll > 95 and roll <= 100:
-                num = 10
+                searchNum = 10
 
-            rolledPotionName = potions[num]['PotionName']
-            potionScreen.ids.potionName.text = rolledPotionName
-            rolledPotionDescription = potions[num]['PotionDescription']
-            potionScreen.ids.potionDescription.text = rolledPotionDescription
-
-            global potionOptions
-
+            global potionsearched
+            
             try:
-                potionOptions = len(potions[num]['Options'])
-                self.manager.get_screen('option').ids.optionName.text = f"Roll A d{potionOptions}"
+                global searchPotionOptions
+                
+                searchPotionOptions = len(potions[searchNum]['Options'])
+                self.manager.get_screen('option').ids.optionName.text = f"Roll A d{searchPotionOptions}"
 
-                if potionOptions > 0:
-                    MDApp.get_running_app().root.current = "option"
-                else:
-                    pass
+                searchedPotionDescription = potions[searchNum]['PotionDescription']
+                potionScreen.ids.potionDescription.text = searchedPotionDescription
+                
+                potionsearched = True
+
+                MDApp.get_running_app().root.current = "option"
+
             except:
+                searchedPotionName = potions[searchNum]['PotionName']
+                potionScreen.ids.potionName.text = searchedPotionName
+
+                searchedPotionDescription = potions[searchNum]['PotionDescription']
+                potionScreen.ids.potionDescription.text = searchedPotionDescription
+                
+                potionsearched = True
+
                 MDApp.get_running_app().root.current = "potion"
         except:
             pass
 
     def rollPotion(self):
         potionScreen = self.manager.get_screen('potion')
+        
+        global rollNum
+
         try:
             roll = randint(1,100)
 
             if roll > 1 and roll <= 50:
-                num = 0
+                rollNum = 0
             elif roll > 50 and roll <= 55:
-                num = 1
+                rollNum = 1
             elif roll > 55 and roll <= 60:
-                num = 2
+                rollNum = 2
             elif roll > 60 and roll <= 65:
-                num = 3
+                rollNum = 3
             elif roll > 65 and roll <=70:
-                num = 4
+                rollNum = 4
             elif roll > 70 and roll <= 75:
-                num = 5
+                rollNum = 5
             elif roll > 75 and roll <= 80:
-                num = 6
+                rollNum = 6
             elif roll > 80 and roll <= 85:
-                num = 7
+                rollNum = 7
             elif roll > 85 and roll <= 90:
-                num = 8
+                rollNum = 8
             elif roll > 90 and roll <= 95:
-                num = 9
+                rollNum = 9
             elif roll > 95 and roll <= 100:
-                num = 10
-
-            rolledPotionName = potions[num]['PotionName']
-            potionScreen.ids.potionName.text = rolledPotionName
-            rolledPotionDescription = potions[num]['PotionDescription']
-            potionScreen.ids.potionDescription.text = rolledPotionDescription
+                rollNum = 10
 
             try:
-                potionOptions = len(potions[num]['Options'])
+                global rolledPotionOptions
                 
-                if potionOptions > 0:
-                    self.manager.get_screen('option').ids.optionName.text = f"Roll A d{potionOptions}"
-                    MDApp.get_running_app().root.current = "option"
-                else:
-                    pass
+                rolledPotionOptions = len(potions[searchNum]['Options'])
+                self.manager.get_screen('option').ids.optionName.text = f"Roll A d{rolledPotionOptions}"
+
+                rolledPotionDescription = potions[rollNum]['PotionDescription']
+                potionScreen.ids.potionDescription.text = rolledPotionDescription
+
+                global potionrolled
+                
+                potionrolled = True
+
+                MDApp.get_running_app().root.current = "option"
+
             except:
+
+                searchedPotionName = potions[searchNum]['PotionName']
+                potionScreen.ids.potionName.text = searchedPotionName
+
+                searchedPotionDescription = potions[searchNum]['PotionDescription']
+                potionScreen.ids.potionDescription.text = searchedPotionDescription
+                
+                potionrolled = True
+
                 MDApp.get_running_app().root.current = "potion"
         except:
             pass
@@ -229,32 +255,59 @@ class PotionScreen(Screen):
         MDApp.get_running_app().root.current = 'home'
 
 class OptionScreen(Screen):
-    def getOption(self):
+    def searchOption(self):
         potionScreen = self.manager.get_screen('potion')
-        rolledPotionOptions = potions[num]['Options']
+        
+        searchedPotionOptions = potions[searchNum]['Options']
         optionsRoll = int(self.manager.get_screen('option').ids.optionInput.text)
-        rolledPotionName = f"{rolledPotionOptions[optionsRoll]}"
-        potionScreen.ids.potionName.text = rolledPotionName
-    
-    def optionRoll(self):
-        try:
-            global potionOptions
-            print(potionOptions)
-            roll = randint(1, potionOptions)
+        
+        searchedPotionName = f"{searchedPotionOptions[optionsRoll]}"
+        potionScreen.ids.potionName.text = searchedPotionName
 
-            potionScreen = self.manager.get_screen('potion')
-            rolledPotionOptions = potions[num]['Options']
-            optionsRoll = roll
-            rolledPotionName = f"{rolledPotionOptions[optionsRoll]}"
-            potionScreen.ids.potionName.text = rolledPotionName
+        MDApp.get_running_app().root.current = "potion"
+    
+    def rollOption(self):
+        global potionsearched
+        global potionrolled
+
+        try:
+            if potionsearched == True:
+                global searchPotionOptions
+                global searchNum
+                roll = randint(1, searchPotionOptions)
+                
+                searchOptions = potions[searchNum]['Options']
+                searchedName = f"{searchOptions[roll]}"
+                
+                potionScreen = self.manager.get_screen('potion')
+                potionScreen.ids.potionName.text = searchedName
+
+            elif potionrolled == True:
+                global rolledPotionOptions
+                global rollNum
+
+                roll = randint(1, rolledPotionOptions)
+
+                rollOptions = potions[rollNum]['Options']
+                rolledName = f"{rollOptions[roll]}"
+
+                potionScreen = self.manager.get_screen('potion')
+                potionScreen.ids.potionName.text = rolledName
         except:
             pass
+    
     def clearText(self):
         homeScreen = self.manager.get_screen('home')
         optionScreen = self.manager.get_screen('option')
 
         homeScreen.ids.rollInput.text = ''
         optionScreen.ids.optionInput.text = ''
+        
+        global potionrolled
+        global potionsearched
+
+        potionsearched = False
+        potionrolled = False
 
         MDApp.get_running_app().root.current = 'home'
 
